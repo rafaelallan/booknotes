@@ -1,6 +1,7 @@
 body {
     background-image: url("/images/background-books.webp");
     background-size: cover;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
 button, select {
@@ -10,14 +11,14 @@ button, select {
 }
 
 .content {
-    width: 80%;
+    width: 50%;
     margin: auto;
-    background-color: green;
+    background-color: aliceblue;
     align-items: center;
+    padding: 20px
 }
 
 .navbar {
-    background-color: red;
     height: 7rem;
     display: flex;
     flex-wrap: wrap;
@@ -36,5 +37,21 @@ button, select {
     flex-wrap: wrap;
     justify-content: end;
     align-items: center;
-    background-color: aliceblue;
+}
+
+.note-section {
+    padding: 20px;
+    border-radius: 15px;
+    background-color: white;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.note-item {
+    background-color: rgb(235, 247, 217);
+
+}
+
+.note-item > div {
+    margin: 10px;
 }
