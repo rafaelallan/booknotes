@@ -1,18 +1,40 @@
-.navbar {
-    padding: 25px;
-    text-align: right;
-    width: 80%;
-}
-
-button {
-    border: 1px solid darkgrey;
-    background-color: #fff;
-    padding: 8px;
-    border-radius: 25px;
-    margin-left: 10px;
-}
-
 body {
     background-image: url("/images/background-books.webp");
     background-size: cover;
+}
+
+button, select {
+    padding: 8px;
+    border-radius: 25px;
+    border: 1px solid darkgrey;
+}
+
+.content {
+    width: 80%;
+    margin: auto;
+    background-color: green;
+    align-items: center;
+}
+
+.navbar {
+    background-color: red;
+    height: 7rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    align-items: center;
+}
+
+.nav-item {
+    background-color: #fff;
+    margin-left: 10px;
+} 
+
+.sorting-section {
+    height: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    align-items: center;
+    background-color: aliceblue;
 }
