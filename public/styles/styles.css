@@ -1,0 +1,18 @@
+.navbar {
+    padding: 25px;
+    text-align: right;
+    width: 80%;
+}
+
+button {
+    border: 1px solid darkgrey;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 25px;
+    margin-left: 10px;
+}
+
+body {
+    background-image: url("/images/background-books.webp");
+    background-size: cover;
+}
