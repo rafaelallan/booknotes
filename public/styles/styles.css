@@ -21,10 +21,14 @@ select {
     color: #fff;
 }
 
+label {
+    font-weight: bold;
+}
+
 .container {
     /* width: 50%; */
     margin: auto;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
     align-items: center;
     padding: 20px;
 }
@@ -58,14 +62,20 @@ select {
     display: flex;
     flex-wrap: wrap;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    line-height: 150%;
 }
 
-.note-section > .note-left{
+.note-left {
     text-align: center;
+    /* background-color: red; */
+    width: 300px;
+    margin: auto;
 }
 
-.note-item {
-    /* background-color: rgb(235, 247, 217); */
+.note-right {
+    /* background-color: green; */
+    flex-grow: 1;
+    width: 500px;
 }
 
 .note-right > div {
@@ -73,8 +83,38 @@ select {
 }
 
 .book-image {
-    height: 250px;
+    height: 300px;
 }
+
+.book-title-section {
+    display: flex;
+}
+
+.book-title {
+    width: 100%;
+}
+
+.rating {
+    float: right;
+}
+
+.book-list-result {
+    text-align: justify;
+}
+
+.yellow-star {
+    color: yellow;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    margin-left: 4px;
+  }
+
+  .white-star {
+    color: white;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    margin-left: 4px;
+  }
 
 /* Media query for screens smaller than 768px (e.g., mobile devices) */
 @media (max-width: 767px) {
