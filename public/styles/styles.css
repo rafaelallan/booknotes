@@ -1,21 +1,32 @@
 body {
     background-image: url("/images/background-books.webp");
     background-size: cover;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.2rem;
 }
 
 button, select {
-    padding: 8px;
-    border-radius: 25px;
-    border: 1px solid darkgrey;
+    padding: 10px;
+    border: 1px solid rgb(217, 217, 217);
+    font-size: 1rem;
 }
 
-.content {
-    width: 50%;
+button {
+    border-radius: 25px;
+}
+
+select {
+    border-radius: 15px;
+    background-color: #027AB0;
+    color: #fff;
+}
+
+.container {
+    /* width: 50%; */
     margin: auto;
     background-color: aliceblue;
     align-items: center;
-    padding: 20px
+    padding: 20px;
 }
 
 .navbar {
@@ -42,16 +53,53 @@ button, select {
 .note-section {
     padding: 20px;
     border-radius: 15px;
+    margin: 10px 0;
     background-color: white;
     display: flex;
+    flex-wrap: wrap;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
-.note-item {
-    background-color: rgb(235, 247, 217);
-
+.note-section > .note-left{
+    text-align: center;
 }
 
-.note-item > div {
+.note-item {
+    /* background-color: rgb(235, 247, 217); */
+}
+
+.note-right > div {
     margin: 10px;
 }
+
+.book-image {
+    height: 250px;
+}
+
+/* Media query for screens smaller than 768px (e.g., mobile devices) */
+@media (max-width: 767px) {
+    .container {
+      padding: 10px; /* Reduce padding for smaller screens */
+    }
+  }
+  
+  /* Media query for screens between 768px and 991px (e.g., tablets) */
+  @media (min-width: 768px) and (max-width: 991px) {
+    .container {
+        max-width: 720px; /* Adjust maximum width for tablets */
+    }
+  }
+  
+  /* Media query for screens between 992px and 1199px (e.g., smaller desktops) */
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .container {
+      max-width: 940px; /* Adjust maximum width for smaller desktops */
+    }
+  }
+  
+  /* Media query for screens 1200px and larger (e.g., large desktops) */
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1140px; /* Adjust maximum width for large desktops */
+    }
+  }

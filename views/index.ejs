@@ -1,6 +1,6 @@
 <%- include("partials/header.ejs") %>
 
-    <div class="content">
+    <div class="container">
         <div class="sorting-section">
             <select class="button" name="sorting">
                 <option value="value">Date read</option>
@@ -9,15 +9,15 @@
         </div>
 
         <div class="note-section">
-            <div class="note-item" style="flex-grow: 1">
-                Image
+            <div class="note-item note-left" style="flex-grow: 1">
+                <img class="book-image" src="/images/book.jpeg">
             </div>
-            <div class="note-item" style="flex-grow: 3">
+            <div class="note-item note-right" style="flex-grow: 6">
                 <div><h2 style="margin: 0">Book's Title</h2></div>
                 <div><label>ISBN: </label></div>
                 <div><label>Data read: </label></div>
-                <div><label>Summary: </label></div>
                 <div><label>Rating: </label></div>
+                <div><label>Summary: </label></div>
             </div>
         </div>
     </div>
