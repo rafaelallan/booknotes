@@ -1,20 +1,35 @@
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 body {
     background-image: url("/images/background-books.webp");
     background-size: cover;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 1.2rem;
+    
 }
 
-.nav-item, select {
-    padding: 10px;
-    border: 1px solid rgb(217, 217, 217);
-    font-size: 1rem;
-}
 
-select {
-    border-radius: 15px;
+.sorting-field {
     background-color: #027AB0;
     color: #fff;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.form-section {
+    width:80%;
+    margin:auto;
+}
+
+.form-field {
+    padding: 10px;
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.2rem;
 }
 
 label {
@@ -28,7 +43,11 @@ label {
     padding: 20px;
 }
 
-.navbar {
+.nav {
+    justify-content: end;
+}
+
+/* .navbar {
     height: 7rem;
     display: flex;
     flex-wrap: wrap;
@@ -39,10 +58,17 @@ label {
 .nav-item {
     background-color: #fff;
     margin-left: 10px;
-    border-radius: 25px;
+
     color: inherit;
     text-decoration: none;
-}
+} */
+
+/* Navigation bar
+.nav-item {
+    padding: 10px;
+    border: 1px solid rgb(217, 217, 217);
+    font-size: 1rem;
+} */
 
 .sorting-section {
     height: 3rem;
@@ -113,6 +139,8 @@ label {
     -webkit-text-stroke-color: black;
     margin-left: 4px;
   }
+
+/***************** Mobile Section *****************/
 
 /* Media query for screens smaller than 768px (e.g., mobile devices) */
 @media (max-width: 767px) {
