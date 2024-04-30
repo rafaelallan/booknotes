@@ -1,48 +1,48 @@
 <%- include("partials/header.ejs") %>
 
     <div class="container">
-        <div class="form-section">
-            <form class="needs-validation" novalidate="">
-                <div class="row g-3">
+        <h1 class="mb-5 mt-5">New Note</h1>
+        <form class="needs-validation" novalidate="">
+            <div class="row g-3">
+                <div class="col-12">
+                    <label for="country" class="form-label">Books</label>
+                    <select class="form-select" id="book" required="">
+                        <option value="">Choose...</option>
+                        <option>Book 1</option>
+                        <option>Book 2</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a book
+                    </div>
+                </div>
 
-                    <div class="col-12">
-                        <label for="country" class="form-label">Books</label>
-                        <select class="form-select" id="book" required="">
-                          <option value="">Choose...</option>
-                          <option>Book 1</option>
-                          <option>Book 2</option>
-                        </select>
-                        <div class="invalid-feedback">
-                          Please select a book
-                        </div>
-                      </div>
-
-                  <div class="col-sm-6">
+                <div class="col-sm-6">
                     <label for="firstName" class="form-label">Read Date</label>
                     <input type="date" class="form-control" id="firstName" placeholder="" value="" required="">
                     <div class="invalid-feedback">
-                      Valid Read Date is required
+                        Valid Read Date is required
                     </div>
-                  </div>
-      
-                  <div class="col-sm-6">
-                    <label for="firstName" class="form-label">Rating</label>
-                    <input type="number" class="form-control" id="firstName" placeholder="" value="" required="" min=0 max=5>
-                    <div class="invalid-feedback">
-                      Valid rating is required.
-                    </div>
-                  </div>
-      
-                  <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">Notes</label>
-                  </div>
+                </div>
 
-                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <div class="col-sm-6">
+                    <label for="firstName" class="form-label">Rating</label>
+                    <input type="number" class="form-control" id="firstName" placeholder="" value="" required="" min=0
+                        max=5>
+                    <div class="invalid-feedback">
+                        Valid rating is required.
+                    </div>
+                </div>
+
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                        style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Notes</label>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <input class="btn btn-primary" type="submit" name="createNote" value="Create Note">
                     <input class="btn btn-primary" type="reset" name="clear" value="Clear">
-                  </div>
+                </div>
 
-              </form>   
-        </div>
+        </form>
     </div>
