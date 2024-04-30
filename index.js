@@ -18,7 +18,11 @@ app.get("/notes/new", (req, res) => {
 
 app.get("/books/new", (req, res) => {
     res.render("newbook.ejs");
-})
+});
+
+app.get("/notes/id", (req, res) => {
+    res.render("notes.ejs");
+});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

@@ -6,7 +6,6 @@ body {
     
 }
 
-
 .sorting-field {
     background-color: #027AB0;
     color: #fff;
@@ -29,6 +28,20 @@ body {
     margin: auto;
     align-items: center;
     padding: 20px;
+}
+
+.book-info {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    padding: 10px
+}
+
+.book-summary {
+    min-height: 100px;
+}
+
+.book-notes {
+    min-height: 100px;
 }
 
 .nav {
