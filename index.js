@@ -17,7 +17,7 @@ app.get("/notes/new", (req, res) => {
 });
 
 app.get("/books/new", (req, res) => {
-    res.render("books.ejs");
+    res.render("newbook.ejs");
 })
 
 app.listen(port, () => {
