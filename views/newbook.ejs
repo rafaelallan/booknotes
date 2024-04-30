@@ -1,11 +1,47 @@
 <%- include("partials/header.ejs") %>
 
-BOOKS
-- Title field
-- Actor field
-- ISBN field
-- Summary
-- Create Book and Clear buttons
+<div class="container">
+    <h1 class="mb-5 mt-5">New Book</h1>
+    <form class="needs-validation" novalidate="">
+        <div class="row g-3">
+
+            <div class="col-sm-12">
+                <label for="firstName" class="form-label">Title of the Book</label>
+                <input type="text" class="form-control" id="firstName" required="">
+                <div class="invalid-feedback">
+                    Valid title of the book is required
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="actorName" class="form-label">Actor</label>
+                <input type="text" class="form-control" id="actorName" required="">
+                <div class="invalid-feedback">
+                    Valid rating is required.
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="firstName" class="form-label">ISBN</label>
+                <input type="number" class="form-control" id="firstName" required="">
+                <div class="invalid-feedback">
+                    Valid rating is required.
+                </div>
+            </div>
+
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="summary"
+                    style="height: 100px"></textarea>
+                <label for="summary">Summary</label>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <input class="btn btn-primary" type="submit" name="createBook" value="Create Book">
+                <input class="btn btn-primary" type="reset" name="clear" value="Clear">
+            </div>
+        </div>
+    </form>
+</div>
 
 [Accordion]
 Top:
