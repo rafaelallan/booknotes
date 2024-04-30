@@ -16,6 +16,10 @@ app.get("/notes/new", (req, res) => {
     res.render("newnote.ejs");
 });
 
+app.get("/books/new", (req, res) => {
+    res.render("books.ejs");
+})
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
