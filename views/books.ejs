@@ -2,41 +2,37 @@
 
 <div class="container">
     <h1 class="mb-5 mt-5">New Book</h1>
-    <form class="needs-validation" novalidate="">
+    <form class="needs-validation" novalidate="" method="POST" action="/books">
         <div class="row g-3">
 
             <div class="col-sm-12">
                 <label for="firstName" class="form-label">Title of the Book</label>
-                <input type="text" class="form-control" id="firstName" required="">
+                <input type="text" class="form-control" id="firstName" name="firstName" required>
                 <div class="invalid-feedback">
-                    Valid title of the book is required
+                    Title of the book is required
                 </div>
             </div>
-
             <div class="col-sm-6">
                 <label for="actorName" class="form-label">Actor</label>
-                <input type="text" class="form-control" id="actorName" required="">
+                <input type="text" class="form-control" id="actorName" name="actorName" required>
                 <div class="invalid-feedback">
-                    Valid rating is required.
+                    Actor is required.
                 </div>
             </div>
-
             <div class="col-sm-6">
-                <label for="firstName" class="form-label">ISBN</label>
-                <input type="number" class="form-control" id="firstName" required="">
+                <label for="isbn" class="form-label">ISBN</label>
+                <input type="number" class="form-control" id="isbn" name="isbn" required>
                 <div class="invalid-feedback">
-                    Valid rating is required.
+                    ISBN is required.
                 </div>
             </div>
-
             <div class="form-floating">
-                <textarea class="form-control" id="summary"
-                    style="height: 100px"></textarea>
+                <textarea class="form-control" placeholder="Leave a summary here" id="summary"
+                    style="height: 100px" name="summary" required></textarea>
                 <label for="summary">Summary</label>
             </div>
-
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <input class="btn btn-primary" type="submit" name="createBook" value="Create Book">
+                <input class="btn btn-primary" type="submit" value="Create Book">
                 <input class="btn btn-primary" type="reset" name="clear" value="Clear">
             </div>
         </div>
@@ -83,6 +79,26 @@
             </div>
           </div>
         </div>
-    </div>
-        
+    </div>  
 </div>
+
+<script>
+    (() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>

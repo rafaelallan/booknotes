@@ -141,6 +141,10 @@ body {
     margin-left: 4px;
   }
 
+  .accordion-button:not(.collapsed) {
+    background-color: #fff;
+  }
+
 /***************** Mobile Section *****************/
 
 /* Media query for screens smaller than 768px (e.g., mobile devices) */
