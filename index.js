@@ -19,14 +19,48 @@ app.use('/notes', express.static('public'))
 app.use('/books', express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+
+async function getBooks(){
+    let result;
+    try {
+        result = await db.query("SELECT * FROM books");
+    } catch (err) {
+        console.error(err.stack);
+    }
+    return result;
+}
+
+
 app.get("/", (req, res) => {
     res.render("index.ejs");
 });
 
 // Notes
-app.get("/notes/new", (req, res) => {
-    res.render("newnote.ejs");
+app.get("/notes/new", async (req, res) => {
+
+    let books = await getBooks();
+
+    res.render("newnote.ejs", {
+        books: books.rows
+    });
+
 });
+
+app.route("/notes/new")
+    .get(async(req, res) => {
+        let books = await getBooks();
+
+        console.log("Mine: " + books.rows);
+
+        res.render("newnote.ejs", {
+            books: books.rows
+        });
+    })
+    .post(async(req, res) => {
+        console.log(req.body);
+    })
+
 
 app.get("/notes/id", (req, res) => {
     res.render("notes.ejs");
@@ -34,19 +68,14 @@ app.get("/notes/id", (req, res) => {
 
 
 
-// ********** Books **********
-// app.get("/books", (req, res) => {
-//     res.render("books.ejs");
-// });
-
-// app.post("/books", (req, res) => {
-//     res.render("books.ejs");
-// });
-
-
 app.route("/books")
-    .get((req, res) => {
-        res.render("books.ejs");
+    .get(async(req, res) => {
+
+        let books = await getBooks();
+
+        res.render("books.ejs", {
+            books: books.rows
+        });
     })
     .post(async (req, res) => {
         const bookTitle = req.body.bookTitle;
@@ -54,14 +83,13 @@ app.route("/books")
         const isbn = Number(req.body.isbn);
         const summary = req.body.summary;
 
-        console.log(req.body);
-        res.redirect("/books");
-
         try {
             await db.query("INSERT INTO books (title, summary, actor, isbn) VALUES ($1, $2, $3, $4)",[bookTitle, summary, actorName, isbn]);
         } catch (err) {
             console.error(err.stack);
         };
+
+        res.redirect("/books");
     })
 
 // db.end();

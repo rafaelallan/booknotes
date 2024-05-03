@@ -2,14 +2,16 @@
 
     <div class="container">
         <h1 class="mb-5 mt-5">New Note</h1>
-        <form class="needs-validation" novalidate="">
+        <form class="needs-validation" novalidate="" method="POST" action="/notes/new">
             <div class="row g-3">
                 <div class="col-12">
+                    <input type="hidden" class="form-control" name="bookID" value="<%=books.id %>">
                     <label for="country" class="form-label">Books</label>
-                    <select class="form-select" id="book" required="">
-                        <option value="">Choose...</option>
-                        <option>Book 1</option>
-                        <option>Book 2</option>
+                    <select class="form-select" id="book" name="books" required="">
+                        
+                        <% locals.books.forEach(function(books) { %>
+                            <option value="<%=books.title %>" name="<%=books.title %>"><%=books.title %></option>
+                        <% }); %>
                     </select>
                     <div class="invalid-feedback">
                         Please select a book
@@ -18,7 +20,7 @@
 
                 <div class="col-sm-6">
                     <label for="firstName" class="form-label">Read Date</label>
-                    <input type="date" class="form-control" id="firstName" required="">
+                    <input type="date" class="form-control" id="firstName" name="readDate" required="">
                     <div class="invalid-feedback">
                         Valid Read Date is required
                     </div>
@@ -26,21 +28,20 @@
 
                 <div class="col-sm-6">
                     <label for="firstName" class="form-label">Rating</label>
-                    <input type="number" class="form-control" id="firstName" required="" min=0 max=5>
+                    <input type="number" class="form-control" id="firstName" name="rating" required="" min=0 max=5>
                     <div class="invalid-feedback">
                         Valid rating is required.
                     </div>
                 </div>
 
                 <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a note here" id="note"
-                        style="height: 100px"></textarea>
+                    <textarea class="form-control" placeholder="Leave a note here" id="note" name="note" style="height: 100px"></textarea>
                     <label for="note">Note</label>
                 </div>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <input class="btn btn-primary" type="submit" name="createNote" value="Create Note">
-                    <input class="btn btn-primary" type="reset" name="clear" value="Clear">
+                    <input class="btn btn-primary" type="submit" value="Create Note">
+                    <input class="btn btn-primary" type="reset" value="Clear">
                 </div>
             </div>
         </form>
