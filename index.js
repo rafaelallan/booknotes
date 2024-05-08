@@ -37,35 +37,34 @@ app.get("/", (req, res) => {
 });
 
 // Notes
-app.get("/notes/new", async (req, res) => {
-
-    let books = await getBooks();
-
-    res.render("newnote.ejs", {
-        books: books.rows
-    });
-
-});
-
 app.route("/notes/new")
     .get(async(req, res) => {
-        let books = await getBooks();
-
-        console.log("Mine: " + books.rows);
+        let books = await getBooks();   
 
         res.render("newnote.ejs", {
             books: books.rows
         });
+
     })
     .post(async(req, res) => {
         console.log(req.body);
+        const bookID = req.body.book;
+        const readDate = req.body.readDate;
+        const rating = req.body.rating;
+        const note = req.body.note;
+
+        try {
+            await db.query("INSERT INTO notes (date_read, rating, notes, book_id) VALUES ($1, $2, $3, $4)",[readDate, rating, note, bookID]);
+            res.redirect("/");
+        } catch (err) {
+            console.error(err.stack);
+        };
     })
 
 
 app.get("/notes/id", (req, res) => {
     res.render("notes.ejs");
 });
-
 
 
 app.route("/books")

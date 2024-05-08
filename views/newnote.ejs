@@ -2,15 +2,15 @@
 
     <div class="container">
         <h1 class="mb-5 mt-5">New Note</h1>
+
         <form class="needs-validation" novalidate="" method="POST" action="/notes/new">
             <div class="row g-3">
                 <div class="col-12">
-                    <input type="hidden" class="form-control" name="bookID" value="<%=books.id %>">
                     <label for="country" class="form-label">Books</label>
-                    <select class="form-select" id="book" name="books" required="">
+                    <select class="form-select" id="book" name="book" required="">
                         
                         <% locals.books.forEach(function(books) { %>
-                            <option value="<%=books.title %>" name="<%=books.title %>"><%=books.title %></option>
+                            <option value="<%=books.id %>" name="<%=books.id %>"><%=books.title %></option>
                         <% }); %>
                     </select>
                     <div class="invalid-feedback">
