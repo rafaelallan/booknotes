@@ -44,7 +44,6 @@ app.route("/").get(async (req, res) => {
   var booksRead = [];
 
   try {
-
     for (let i = 0; i < books.rows.length; i++) {
       result = await db.query(
         `SELECT 
@@ -61,29 +60,27 @@ app.route("/").get(async (req, res) => {
         [books.rows[i].id]
       );
 
-    //   console.log(result.rows[0]);
+      //   console.log(result.rows[0]);
 
-    // When the search brings no result (Book just added with no notes),
-    // the date and rating are set to - (hyphen)
+      // When the search brings no result (Book just added with no notes),
+      // the date and rating are set to - (hyphen)
       if (result.rows[0] === undefined) {
+
         booksRead.push({
-           title: books.rows[i].title,
-           isbn: books.rows[i].isbn,
-           last_value: "-",
-           rating: "-",
-           summary: books.rows[i].summary
+          title: books.rows[i].title,
+          isbn: books.rows[i].isbn,
+          last_value: "-",
+          rating: "-",
+          summary: books.rows[i].summary,
         });
       } else {
         booksRead.push(result.rows[0]);
       }
-
- 
     }
-    console.log(booksRead);
+    // console.log(booksRead);
     res.render("index.ejs", {
-        books: booksRead,
-      });
-
+      books: booksRead,
+    });
   } catch (err) {
     console.error(err.stack);
   }
