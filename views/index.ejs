@@ -9,10 +9,10 @@
         </div>
 
         <% locals.books.forEach(books=> { %>
-
                     <div class="note-section mt-3">
                         <div class="note-item note-left">
-                            <img class="book-image" src="/images/book.jpeg">
+                            <!-- <img class="book-image" src="/images/book.jpeg"> -->
+                            <img class="book-image" src="<%= books.image %>">
                         </div>
                         <div class="note-item note-right">
                             <div class="book-title-section">
@@ -20,16 +20,14 @@
                                     <%= books.title %>
                                 </h2>
                                 <div class="rating">
-
                                     <!-- Fill the starts based on the rating -->
                                     <% for (let x=0; x < books.rating; x++){ %>
                                         <span class="yellow-star">★</span>
-                                        <% } %>
-
-                                            <!-- Show remaining empty started based on the rating -->
-                                            <% for (let y=0; y < 5 - books.rating; y++){ %>
-                                                <span class="white-star">★</span>
-                                                <% } %>
+                                    <% } %>
+                                    <!-- Show remaining empty started based on the rating -->
+                                    <% for (let y=0; y < 5 - books.rating; y++){ %>
+                                        <span class="white-star">★</span>
+                                    <% } %>
                                 </div>
                             </div>
                             <div>
@@ -44,9 +42,9 @@
                                     <% if (typeof(books.last_value)=="object" ) { %>
                                         <%= books.last_value.getDate() %>/<%= books.last_value.getMonth() + 1 %>/<%=
                                                     books.last_value.getFullYear() %>
-                                                    <% } else { %>
-                                                        -
-                                                        <% } %>
+                                    <% } else { %>
+                                        -
+                                    <% } %>
                                 </div>
                             </div>
                             <div>

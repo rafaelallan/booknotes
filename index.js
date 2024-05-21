@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
+import axios from "axios";
 
 const app = express();
 const port = 3000;
@@ -44,7 +45,13 @@ app.route("/").get(async (req, res) => {
   var booksRead = [];
 
   try {
+    let imagePath;
+
     for (let i = 0; i < books.rows.length; i++) {
+
+        console.log("-------------------------");
+        console.log("Response data: ");
+
       result = await db.query(
         `SELECT 
             title,
@@ -60,24 +67,56 @@ app.route("/").get(async (req, res) => {
         [books.rows[i].id]
       );
 
-      //   console.log(result.rows[0]);
+      // Verify books coming from the search above
+      // console.log(result.rows);
+
+      // Retrieve book cover from external source
+      try {
+        const response = await axios.get(
+          `https://covers.openlibrary.org/b/isbn/${books.rows[i].isbn}.json`
+        );
+        imagePath = response.data.source_url;
+
+        if (response.data.source_url === "") {
+          // console.log("Yes");
+          imagePath = "/images/cover_unavailable.jpg";
+        }
+      } catch (error) {
+        console.error("Failed to make request:", error.message);
+        imagePath = "/images/cover_unavailable.jpg";
+      }
+
+      // console.log(result.rows[0]);
+
 
       // When the search brings no result (Book just added with no notes),
       // the date and rating are set to - (hyphen)
       if (result.rows[0] === undefined) {
-
         booksRead.push({
           title: books.rows[i].title,
           isbn: books.rows[i].isbn,
           last_value: "-",
           rating: "-",
           summary: books.rows[i].summary,
+          image: imagePath
         });
       } else {
-        booksRead.push(result.rows[0]);
+        booksRead.push({
+          title: result.rows[0].title,
+          isbn: result.rows[0].isbn,
+          last_value: result.rows[0].last_value,
+          rating: result.rows[0].rating,
+          summary: result.rows[0].summary,
+          image: imagePath,
+        });
       }
+
     }
+
+
+
     // console.log(booksRead);
+
     res.render("index.ejs", {
       books: booksRead,
     });
