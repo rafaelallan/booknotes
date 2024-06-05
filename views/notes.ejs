@@ -1,13 +1,17 @@
 <%- include("partials/header.ejs") %>
 
 <div class="container">
-    <h1 class="mb-5 mt-5">Notes - Title of the Book</h1>
+    <h1 class="mb-5 mt-5">Notes - <%= notes[0].title %></h1>
     <div class="book-info">
         <div class="book-summary">
-            Summary
+            <h4>Summary:</h4>
+            <%= notes[0].summary %>
         </div>
         <div class="book-notes">
-            Notes
+            <h4>Notes</h4>
+            <% notes.forEach(element => { %>
+                <p><%= element.notes %></p>
+            <% }) %>
         </div>
     </div>
     <form class="needs-validation mt-5" novalidate="">

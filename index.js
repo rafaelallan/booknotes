@@ -30,13 +30,6 @@ async function getBooks() {
   return result;
 }
 
-// app.get("/", (req, res) => {
-//     let books = getBooks();
-
-//     console.log(books);
-//     res.render("index.ejs");
-// });
-
 app.route("/").get(async (req, res) => {
   let books = await getBooks();
 
@@ -48,22 +41,21 @@ app.route("/").get(async (req, res) => {
     let imagePath;
 
     for (let i = 0; i < books.rows.length; i++) {
-
-        console.log("-------------------------");
-        console.log("Response data: ");
+      console.log("-------------------------");
+      console.log("Response data: ");
 
       result = await db.query(
         `SELECT 
-            title,
-            isbn,
-            LAST_VALUE(date_read) OVER ( ORDER BY notes.id DESC), -- Captures the last date of notes when the book was read
-            rating,
-            summary
-        FROM books
-        JOIN notes
-        ON books.id = book_id
-        AND books.id = $1
-        LIMIT 1;`,
+              title,
+              isbn,
+              LAST_VALUE(date_read) OVER ( ORDER BY notes.id DESC), -- Captures the last date of notes when the book was read
+              rating,
+              summary
+          FROM books
+          JOIN notes
+          ON books.id = book_id
+          AND books.id = $1
+          LIMIT 1;`,
         [books.rows[i].id]
       );
 
@@ -86,9 +78,6 @@ app.route("/").get(async (req, res) => {
         imagePath = "/images/cover_unavailable.jpg";
       }
 
-      // console.log(result.rows[0]);
-
-
       // When the search brings no result (Book just added with no notes),
       // the date and rating are set to - (hyphen)
       if (result.rows[0] === undefined) {
@@ -98,7 +87,7 @@ app.route("/").get(async (req, res) => {
           last_value: "-",
           rating: "-",
           summary: books.rows[i].summary,
-          image: imagePath
+          image: imagePath,
         });
       } else {
         booksRead.push({
@@ -110,12 +99,7 @@ app.route("/").get(async (req, res) => {
           image: imagePath,
         });
       }
-
     }
-
-
-
-    // console.log(booksRead);
 
     res.render("index.ejs", {
       books: booksRead,
@@ -153,8 +137,24 @@ app
     }
   });
 
-app.get("/notes/id", (req, res) => {
-  res.render("notes.ejs");
+app.route("/notes/:id").get(async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  let result;
+  try {
+    result = await db.query(`SELECT title, summary, notes
+                              FROM books
+                              JOIN notes
+                              ON books.id = book_id
+                              AND books.id = ${id}`);
+    res.render("notes.ejs", {
+      notes: result.rows
+    });
+  } catch (err) {
+    console.error(err.stack);
+  }
+
+  // console.log(result.rows);
 });
 
 app
