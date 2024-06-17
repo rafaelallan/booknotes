@@ -17,7 +17,8 @@
                         <div class="note-item note-right">
                             <div class="book-title-section">
                                 <h2 class="book-title" style="margin: 0">
-                                    <%= books.title %>
+                                    <!-- Books title -->
+                                    <a href="/notes/<%= books.id %>"><%= books.title %></a>
                                 </h2>
                                 <div class="rating">
                                     <!-- Fill the starts based on the rating -->
@@ -56,6 +57,4 @@
                         </div>
                     </div>
                     <% }); %>
-
-
     </div>

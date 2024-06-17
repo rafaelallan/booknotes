@@ -45,4 +45,7 @@
                 </div>
             </div>
         </form>
+        <% locals.books.forEach(function(books) { %>
+            <option value="<%=books.id %>" name="<%=books.id %>"><%=books.title %></option>
+        <% }); %>
     </div>

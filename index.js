@@ -30,7 +30,9 @@ async function getBooks() {
   return result;
 }
 
-app.route("/").get(async (req, res) => {
+app
+  .route("/")
+  .get(async (req, res) => {
   let books = await getBooks();
 
   // Used to obtain the last date read of the notes and assign to the books object to show on the page
@@ -41,11 +43,10 @@ app.route("/").get(async (req, res) => {
     let imagePath;
 
     for (let i = 0; i < books.rows.length; i++) {
-      console.log("-------------------------");
-      console.log("Response data: ");
 
       result = await db.query(
         `SELECT 
+              books.id, 
               title,
               isbn,
               LAST_VALUE(date_read) OVER ( ORDER BY notes.id DESC), -- Captures the last date of notes when the book was read
@@ -82,6 +83,7 @@ app.route("/").get(async (req, res) => {
       // the date and rating are set to - (hyphen)
       if (result.rows[0] === undefined) {
         booksRead.push({
+          id: books.rows[i].id,
           title: books.rows[i].title,
           isbn: books.rows[i].isbn,
           last_value: "-",
@@ -91,6 +93,7 @@ app.route("/").get(async (req, res) => {
         });
       } else {
         booksRead.push({
+          id: result.rows[0].id,
           title: result.rows[0].title,
           isbn: result.rows[0].isbn,
           last_value: result.rows[0].last_value,
@@ -99,8 +102,8 @@ app.route("/").get(async (req, res) => {
           image: imagePath,
         });
       }
-    }
-
+      console.log(booksRead);
+    }    
     res.render("index.ejs", {
       books: booksRead,
     });
@@ -137,25 +140,37 @@ app
     }
   });
 
-app.route("/notes/:id").get(async (req, res) => {
+app
+  .route("/notes/:id")
+  .get(async (req, res) => {
   const id = parseInt(req.params.id);
 
   let result;
   try {
-    result = await db.query(`SELECT title, summary, notes
+    result = await db.query(`SELECT books.id, title, summary, notes
                               FROM books
                               JOIN notes
                               ON books.id = book_id
                               AND books.id = ${id}`);
+    
+    // if there is no book with notes, basic book search is made
+    if (result.rows == ""){
+      result = await db.query(`SELECT id, title, summary
+                                FROM books
+                                WHERE id = ${id};`);
+    }
+
     res.render("notes.ejs", {
       notes: result.rows
     });
   } catch (err) {
     console.error(err.stack);
   }
-
-  // console.log(result.rows);
+  })
+  .post(async (req, res) => {
+    console.log(req.body);
 });
+
 
 app
   .route("/books")
