@@ -3,16 +3,24 @@
     <div class="container">
         <h1 class="mb-5 mt-5">New Note</h1>
 
-        <form class="needs-validation" novalidate="" method="POST" action="/notes/new">
+        <!-- Form used to obtain  -->
+        <form id="hiddenBook" method="GET" action="/notes/list">
+            <input type="hidden" id="hiddenBookID" name="hiddenBookID" value="<%=locals.hiddenBookID%>">
+        </form>
+
+        <form class="needs-validation" novalidate="" method="POST" action="/notes/add">
             <div class="row g-3">
                 <div class="col-12">
                     <label for="country" class="form-label">Books</label>
+
                     <select class="form-select" id="book" name="book" required="">
                         
                         <% locals.books.forEach(function(books) { %>
-                            <option value="<%=books.id %>" name="<%=books.id %>"><%=books.title %></option>
+                            <!-- If used to keep the option selected then it comes back from the server -->
+                            <option value="<%=books.id %>" name="<%=books.id %>" <% if(books.id == locals.hiddenBookID) {%><%- selected="selected"%><%}%>><%=books.title %></option>
                         <% }); %>
                     </select>
+
                     <div class="invalid-feedback">
                         Please select a book
                     </div>
@@ -45,7 +53,30 @@
                 </div>
             </div>
         </form>
-        <% locals.books.forEach(function(books) { %>
-            <option value="<%=books.id %>" name="<%=books.id %>"><%=books.title %></option>
-        <% }); %>
+
+        <% if(locals.notes) { %>
+            <div class="container">
+                <div class="book-info">
+                    <div class="book-notes">
+                        <h4>Notes</h4>
+                        <% notes.forEach(element => { %>
+                            <p><%= element.notes %></p>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        <% } else { %>
+            <h4>No notes available yet!</h4>
+        <% } %>
     </div>
+
+    <script>
+        function sendHiddenBookId(){
+            // Obtain the id/value of the book field and pass it to the hidden field
+            document.querySelector("#hiddenBookID").value = parseInt(document.querySelector("#book").value);    
+            document.querySelector("#hiddenBook").submit();
+        }
+        
+        // When the field changes, it calls the field to manage the id to the hidden field
+        document.querySelector("#book").addEventListener('change', sendHiddenBookId);
+    </script>

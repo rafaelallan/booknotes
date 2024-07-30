@@ -20,6 +20,7 @@ app.use("/notes", express.static("public"));
 app.use("/books", express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Search for all the books in the DB
 async function getBooks() {
   let result;
   try {
@@ -30,6 +31,7 @@ async function getBooks() {
   return result;
 }
 
+// -------------------------- Handle the index/home requests --------------------------
 app
   .route("/")
   .get(async (req, res) => {
@@ -60,9 +62,6 @@ app
         [books.rows[i].id]
       );
 
-      // Verify books coming from the search above
-      // console.log(result.rows);
-
       // Retrieve book cover from external source
       try {
         const response = await axios.get(
@@ -70,8 +69,8 @@ app
         );
         imagePath = response.data.source_url;
 
+        // If the liberay does not find the cover, we add one local image
         if (response.data.source_url === "") {
-          // console.log("Yes");
           imagePath = "/images/cover_unavailable.jpg";
         }
       } catch (error) {
@@ -102,7 +101,7 @@ app
           image: imagePath,
         });
       }
-      console.log(booksRead);
+      // console.log(booksRead);
     }    
     res.render("index.ejs", {
       books: booksRead,
@@ -112,7 +111,7 @@ app
   }
 });
 
-// Notes
+// -------------------------- Handle New Notes --------------------------
 app
   .route("/notes/new")
   .get(async (req, res) => {
@@ -120,7 +119,7 @@ app
 
     res.render("newnote.ejs", {
       books: books.rows,
-    });
+    })
   })
   .post(async (req, res) => {
     console.log(req.body);
@@ -140,6 +139,44 @@ app
     }
   });
 
+// In Progress - Creating to list all the notes in New Note page.
+app
+  .route("/notes/list")
+  .get(async (req, res) => {
+    console.log(req.query);
+    const books = await getBooks();
+    const id = parseInt(req.query.hiddenBookID);
+
+    let result;
+    try {
+      result = await db.query(`SELECT books.id, title, summary, notes
+                                FROM books
+                                JOIN notes
+                                ON books.id = book_id
+                                AND books.id = ${id}`);
+
+      // console.log(result.rows);
+
+      if(result.rows != "") {
+        res.render("newnote.ejs", {
+          notes: result.rows,
+          books: books.rows,
+          hiddenBookID: id
+        });
+      } else {
+        res.render("newnote.ejs", {
+          books: books.rows,
+          hiddenBookID: id
+        });
+      }
+
+
+    } catch (err) {
+      console.error(err.stack);
+    }
+  })
+
+// -------------------------- Show selected book notes --------------------------
 app
   .route("/notes/:id")
   .get(async (req, res) => {
@@ -171,7 +208,7 @@ app
     console.log(req.body);
 });
 
-
+// -------------------------- Show all the book as well as add new books --------------------------
 app
   .route("/books")
   .get(async (req, res) => {
