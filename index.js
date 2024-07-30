@@ -143,7 +143,6 @@ app
 app
   .route("/notes/list")
   .get(async (req, res) => {
-    console.log(req.query);
     const books = await getBooks();
     const id = parseInt(req.query.hiddenBookID);
 

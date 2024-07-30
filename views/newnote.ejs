@@ -8,13 +8,13 @@
             <input type="hidden" id="hiddenBookID" name="hiddenBookID" value="<%=locals.hiddenBookID%>">
         </form>
 
-        <form class="needs-validation" novalidate="" method="POST" action="/notes/add">
+        <form class="needs-validation" novalidate="" method="POST" action="/notes/new">
             <div class="row g-3">
                 <div class="col-12">
                     <label for="country" class="form-label">Books</label>
 
                     <select class="form-select" id="book" name="book" required="">
-                        
+                        <option value="0" name="defaultOption">Choose a Book</option>
                         <% locals.books.forEach(function(books) { %>
                             <!-- If used to keep the option selected then it comes back from the server -->
                             <option value="<%=books.id %>" name="<%=books.id %>" <% if(books.id == locals.hiddenBookID) {%><%- selected="selected"%><%}%>><%=books.title %></option>
