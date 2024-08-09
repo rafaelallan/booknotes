@@ -133,7 +133,7 @@ app
         "INSERT INTO notes (date_read, rating, notes, book_id) VALUES ($1, $2, $3, $4)",
         [readDate, rating, note, bookID]
       );
-      res.redirect("/");
+      res.redirect("/notes/list");
     } catch (err) {
       console.error(err.stack);
     }
@@ -154,8 +154,7 @@ app
                                 ON books.id = book_id
                                 AND books.id = ${id}`);
 
-      // console.log(result.rows);
-
+      // if the database finds records, render the page with the books and its notes
       if(result.rows != "") {
         res.render("newnote.ejs", {
           notes: result.rows,
@@ -165,7 +164,8 @@ app
       } else {
         res.render("newnote.ejs", {
           books: books.rows,
-          hiddenBookID: id
+          hiddenBookID: id,
+          noBookNotesFound: true // available to indicate to EJS that a book was selected but no notes were found.
         });
       }
 
@@ -202,10 +202,7 @@ app
   } catch (err) {
     console.error(err.stack);
   }
-  })
-  .post(async (req, res) => {
-    console.log(req.body);
-});
+  });
 
 // -------------------------- Show all the book as well as add new books --------------------------
 app
