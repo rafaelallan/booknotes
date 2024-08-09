@@ -98,7 +98,7 @@ app.route("/").get(async (req, res) => {
           image: imagePath,
         });
       }
-      // console.log(booksRead);
+
     }
     res.render("index.ejs", {
       books: booksRead,
@@ -108,11 +108,6 @@ app.route("/").get(async (req, res) => {
   }
 });
 
-// -------------------------- Handle New Notes --------------------------
-// app.route("/notes/new")
-//   ;
-
-// app
 app.route("/notes")
   .get(async (req, res) => {
     let books = await getBooks();
@@ -120,7 +115,9 @@ app.route("/notes")
     res.render("newnote.ejs", {
       books: books.rows,
     });
-  })
+  });
+
+app.route("/notes/add")
   .post(async (req, res) => {
     console.log(req.body);
     const bookID = req.body.book;
@@ -137,6 +134,13 @@ app.route("/notes")
     } catch (err) {
       console.error(err.stack);
     }
+  })
+
+app.route("/notes/delete")
+  .post(async (req, res) => {
+    console.log("Hey");
+    
+    // console.log(req.query)
   });
 
 // In Progress - Creating to list all the notes in New Note page.
