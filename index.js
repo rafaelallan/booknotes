@@ -32,9 +32,7 @@ async function getBooks() {
 }
 
 // -------------------------- Handle the index/home requests --------------------------
-app
-  .route("/")
-  .get(async (req, res) => {
+app.route("/").get(async (req, res) => {
   let books = await getBooks();
 
   // Used to obtain the last date read of the notes and assign to the books object to show on the page
@@ -45,7 +43,6 @@ app
     let imagePath;
 
     for (let i = 0; i < books.rows.length; i++) {
-
       result = await db.query(
         `SELECT 
               books.id, 
@@ -102,7 +99,7 @@ app
         });
       }
       // console.log(booksRead);
-    }    
+    }
     res.render("index.ejs", {
       books: booksRead,
     });
@@ -112,15 +109,16 @@ app
 });
 
 // -------------------------- Handle New Notes --------------------------
-app
-  .route("/notes/new")
-  .get(async (req, res) => {
-    let books = await getBooks();
+app.route("/notes/new").get(async (req, res) => {
+  let books = await getBooks();
 
-    res.render("newnote.ejs", {
-      books: books.rows,
-    })
-  })
+  res.render("newnote.ejs", {
+    books: books.rows,
+  });
+});
+
+app
+  .route("/notes/")
   .post(async (req, res) => {
     console.log(req.body);
     const bookID = req.body.book;
@@ -133,52 +131,46 @@ app
         "INSERT INTO notes (date_read, rating, notes, book_id) VALUES ($1, $2, $3, $4)",
         [readDate, rating, note, bookID]
       );
-      res.redirect("/notes/list");
+      res.redirect("/notes/new");
     } catch (err) {
       console.error(err.stack);
     }
   });
 
 // In Progress - Creating to list all the notes in New Note page.
-app
-  .route("/notes/list")
-  .get(async (req, res) => {
-    const books = await getBooks();
-    const id = parseInt(req.query.hiddenBookID);
+app.route("/notes/list").get(async (req, res) => {
+  const books = await getBooks();
+  const id = parseInt(req.query.hiddenBookID);
 
-    let result;
-    try {
-      result = await db.query(`SELECT books.id, title, summary, notes
+  let result;
+  try {
+    result = await db.query(`SELECT books.id, title, summary, notes
                                 FROM books
                                 JOIN notes
                                 ON books.id = book_id
                                 AND books.id = ${id}`);
 
-      // if the database finds records, render the page with the books and its notes
-      if(result.rows != "") {
-        res.render("newnote.ejs", {
-          notes: result.rows,
-          books: books.rows,
-          hiddenBookID: id
-        });
-      } else {
-        res.render("newnote.ejs", {
-          books: books.rows,
-          hiddenBookID: id,
-          noBookNotesFound: true // available to indicate to EJS that a book was selected but no notes were found.
-        });
-      }
-
-
-    } catch (err) {
-      console.error(err.stack);
+    // if the database finds records, render the page with the books and its notes
+    if (result.rows != "") {
+      res.render("newnote.ejs", {
+        notes: result.rows,
+        books: books.rows,
+        hiddenBookID: id,
+      });
+    } else {
+      res.render("newnote.ejs", {
+        books: books.rows,
+        hiddenBookID: id,
+        noBookNotesFound: true, // available to indicate to EJS that a book was selected but no notes were found.
+      });
     }
-  })
+  } catch (err) {
+    console.error(err.stack);
+  }
+});
 
 // -------------------------- Show selected book notes --------------------------
-app
-  .route("/notes/:id")
-  .get(async (req, res) => {
+app.route("/notes/:id").get(async (req, res) => {
   const id = parseInt(req.params.id);
 
   let result;
@@ -188,21 +180,21 @@ app
                               JOIN notes
                               ON books.id = book_id
                               AND books.id = ${id}`);
-    
+
     // if there is no book with notes, basic book search is made
-    if (result.rows == ""){
+    if (result.rows == "") {
       result = await db.query(`SELECT id, title, summary
                                 FROM books
                                 WHERE id = ${id};`);
     }
 
     res.render("notes.ejs", {
-      notes: result.rows
+      notes: result.rows,
     });
   } catch (err) {
     console.error(err.stack);
   }
-  });
+});
 
 // -------------------------- Show all the book as well as add new books --------------------------
 app
