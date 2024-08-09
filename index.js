@@ -109,16 +109,18 @@ app.route("/").get(async (req, res) => {
 });
 
 // -------------------------- Handle New Notes --------------------------
-app.route("/notes/new").get(async (req, res) => {
-  let books = await getBooks();
+// app.route("/notes/new")
+//   ;
 
-  res.render("newnote.ejs", {
-    books: books.rows,
-  });
-});
-
-app
-  .route("/notes/")
+// app
+app.route("/notes")
+  .get(async (req, res) => {
+    let books = await getBooks();
+  
+    res.render("newnote.ejs", {
+      books: books.rows,
+    });
+  })
   .post(async (req, res) => {
     console.log(req.body);
     const bookID = req.body.book;
