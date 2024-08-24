@@ -108,6 +108,8 @@ app.route("/").get(async (req, res) => {
   }
 });
 
+// -------------------------- Handle Notes --------------------------
+
 app.route("/notes")
   .get(async (req, res) => {
     let books = await getBooks();
@@ -125,22 +127,35 @@ app.route("/notes/add")
     const rating = req.body.rating;
     const note = req.body.note;
 
+    console.log(bookID);
+    console.log(readDate);
+    console.log(rating);
+    console.log(note);
+
+
     try {
       await db.query(
         "INSERT INTO notes (date_read, rating, notes, book_id) VALUES ($1, $2, $3, $4)",
         [readDate, rating, note, bookID]
       );
-      res.redirect("/notes/new");
+      res.redirect("/notes/list?hiddenBookID=" + bookID);
     } catch (err) {
       console.error(err.stack);
     }
-  })
+  });
 
 app.route("/notes/delete")
   .post(async (req, res) => {
-    console.log("Hey");
+    const idNoteBookToDelete = parseInt(req.body.idNoteBookToDelete);
+
+    // console.log(idNoteBookToDelete);
     
-    // console.log(req.query)
+    try {
+      db.query("DELETE FROM notes where book_id = $1", [idNoteBookToDelete]);
+      res.redirect("/notes/" + idNoteBookToDelete);
+      } catch (err) {
+        console.error(err.stack);
+    }
   });
 
 // In Progress - Creating to list all the notes in New Note page.
@@ -206,7 +221,10 @@ app.route("/notes/:id").get(async (req, res) => {
 app
   .route("/books")
   .get(async (req, res) => {
-    let books = await getBooks();
+    const books = await getBooks();
+
+    console.log(books.rows);
+    
 
     res.render("books.ejs", {
       books: books.rows,
@@ -230,7 +248,7 @@ app
     res.redirect("/books");
   });
 
-// db.end();
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

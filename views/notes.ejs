@@ -15,8 +15,8 @@
         </div>
         <form method="post" action="/notes/delete">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <input type="text" name="idNoteToDelete" value="<%= notes[0].id %>">
-                <input type="submit" class="btn btn-danger" name="deleteNotes" value="Delete notes">
+                <input type="hidden" name="idNoteBookToDelete" value="<%= notes[0].id %>">
+                <input type="submit" class="btn btn-danger" value="Delete notes">
             </div>
         </form>
     </div>
