@@ -223,9 +223,6 @@ app
   .get(async (req, res) => {
     const books = await getBooks();
 
-    console.log(books.rows);
-    
-
     res.render("books.ejs", {
       books: books.rows,
     });
@@ -246,6 +243,23 @@ app
     }
 
     res.redirect("/books");
+  });
+
+  // -------------------------- Delete book --------------------------
+
+  
+  app.route("/books/delete")
+  .post(async (req, res) => {
+    const bookID = parseInt(req.body.bookID);
+
+    console.log(bookID);
+
+    try {
+      db.query("DELETE FROM books where id = $1", [bookID]);
+      res.redirect("/books/");
+      } catch (err) {
+        console.error(err.stack);
+    }
   });
 
 
