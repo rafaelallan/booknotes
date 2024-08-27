@@ -138,13 +138,14 @@ app.route("/notes/add")
         "INSERT INTO notes (date_read, rating, notes, book_id) VALUES ($1, $2, $3, $4)",
         [readDate, rating, note, bookID]
       );
-      res.redirect("/notes/list?hiddenBookID=" + bookID);
+      res.redirect("/notes/list?bookID=" + bookID);
     } catch (err) {
       console.error(err.stack);
     }
   });
 
-app.route("/notes/delete")
+app
+  .route("/notes/delete")
   .post(async (req, res) => {
     const idNoteBookToDelete = parseInt(req.body.idNoteBookToDelete);
 
@@ -159,9 +160,11 @@ app.route("/notes/delete")
   });
 
 // In Progress - Creating to list all the notes in New Note page.
-app.route("/notes/list").get(async (req, res) => {
+app
+  .route("/notes/list")
+  .get(async (req, res) => {
   const books = await getBooks();
-  const id = parseInt(req.query.hiddenBookID);
+  const id = parseInt(req.query.bookID);
 
   let result;
   try {
@@ -176,12 +179,12 @@ app.route("/notes/list").get(async (req, res) => {
       res.render("newnote.ejs", {
         notes: result.rows,
         books: books.rows,
-        hiddenBookID: id,
+        bookID: id,
       });
     } else {
       res.render("newnote.ejs", {
         books: books.rows,
-        hiddenBookID: id,
+        bookID: id,
         noBookNotesFound: true, // available to indicate to EJS that a book was selected but no notes were found.
       });
     }
