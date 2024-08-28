@@ -3,58 +3,70 @@
     <div class="container">
         <div class="sorting-section">
             <select class="sorting-field" name="sorting">
-                <option value="value">Date read</option>
-                <option value="value">Rating</option>
+                <option value="">Sort by</option>
+                <option value="sortByDateRead">Date read</option>
+                <option value="sortByRating">Rating</option>
             </select>
         </div>
 
         <% locals.books.forEach(books=> { %>
-                    <div class="note-section mt-3">
-                        <div class="note-item note-left">
-                            <!-- <img class="book-image" src="/images/book.jpeg"> -->
-                            <img class="book-image" src="<%= books.image %>">
-                        </div>
-                        <div class="note-item note-right">
-                            <div class="book-title-section">
-                                <h2 class="book-title" style="margin: 0">
-                                    <!-- Books title -->
-                                    <a href="/notes/<%= books.id %>"><%= books.title %></a>
-                                </h2>
-                                <div class="rating">
-                                    <!-- Fill the starts based on the rating -->
-                                    <% for (let x=0; x < books.rating; x++){ %>
-                                        <span class="yellow-star">★</span>
-                                    <% } %>
+            <div class="note-section mt-3">
+                <div class="note-item note-left">
+                    <!-- <img class="book-image" src="/images/book.jpeg"> -->
+                    <img class="book-image" src="<%= books.image %>">
+                </div>
+                <div class="note-item note-right">
+                    <div class="book-title-section">
+                        <h2 class="book-title" style="margin: 0">
+                            <!-- Books title -->
+                            <a href="/notes/<%= books.id %>">
+                                <%= books.title %>
+                            </a>
+                        </h2>
+                        <div class="rating">
+                            <!-- Fill the starts based on the rating -->
+                            <% for (let x=0; x < books.rating; x++){ %>
+                                <span class="yellow-star">★</span>
+                                <% } %>
                                     <!-- Show remaining empty started based on the rating -->
                                     <% for (let y=0; y < 5 - books.rating; y++){ %>
                                         <span class="white-star">★</span>
-                                    <% } %>
-                                </div>
-                            </div>
-                            <div>
-                                <label>ISBN: </label>
-                                <div class="book-list-result">
-                                    <%= books.isbn %>
-                                </div>
-                            </div>
-                            <div>
-                                <label>Data read: </label>
-                                <div class="book-list-result">
-                                    <% if (typeof(books.last_value)=="object" ) { %>
-                                        <%= books.last_value.getDate() %>/<%= books.last_value.getMonth() + 1 %>/<%=
-                                                    books.last_value.getFullYear() %>
-                                    <% } else { %>
-                                        -
-                                    <% } %>
-                                </div>
-                            </div>
-                            <div>
-                                <label>Summary: </label>
-                                <div class="book-list-result">
-                                    <%= books.summary %>
-                                </div>
-                            </div>
+                                        <% } %>
                         </div>
                     </div>
-                    <% }); %>
+                    <div>
+                        <label>ISBN: </label>
+                        <div class="book-list-result">
+                            <%= books.isbn %>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Data read: </label>
+                        <div class="book-list-result">
+                            <% if (typeof(books.last_value)=="object" ) { %>
+                                <%= books.last_value.getDate() %>/<%= books.last_value.getMonth() + 1 %>/<%=
+                                            books.last_value.getFullYear() %>
+                                            <% } else { %>
+                                                -
+                                                <% } %>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Summary: </label>
+                        <div class="book-list-result">
+                            <%= books.summary %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
     </div>
+
+    <script>
+        function sortDateRead() {
+
+        }
+
+        // When the field changes, it calls the field to manage the id to the hidden field
+        document.querySelector("#book").addEventListener('change', sendHiddenBookId);
+    </script>

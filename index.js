@@ -100,6 +100,12 @@ app.route("/").get(async (req, res) => {
       }
 
     }
+    console.log(booksRead);
+    booksRead.sort((a,b) => b.last_value - a.last_value);
+    console.log("=======================");
+    console.log(booksRead);
+    
+    
     res.render("index.ejs", {
       books: booksRead,
     });
@@ -127,12 +133,6 @@ app.route("/notes/add")
     const rating = req.body.rating;
     const note = req.body.note;
 
-    console.log(bookID);
-    console.log(readDate);
-    console.log(rating);
-    console.log(note);
-
-
     try {
       await db.query(
         "INSERT INTO notes (date_read, rating, notes, book_id) VALUES ($1, $2, $3, $4)",
@@ -159,7 +159,7 @@ app
     }
   });
 
-// In Progress - Creating to list all the notes in New Note page.
+// Show a list all the notes in New Note page.
 app
   .route("/notes/list")
   .get(async (req, res) => {

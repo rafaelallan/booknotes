@@ -17,7 +17,7 @@
                     <select class="form-select" id="book" name="book" required>
                         <option value="" selected>Choose a Book</option>
                         <% locals.books.forEach(function(books) { %>
-                            <!-- If used to keep the option selected then it comes back from the server -->
+                            <!-- If used to keep the option selected after the server response -->
                             <option value="<%=books.id %>" name="<%=books.id %>" <% if(books.id==locals.bookID)
                                 {%><%- selected="selected" %>
                                     <%}%>><%=books.title %>
@@ -86,6 +86,8 @@
         function sendHiddenBookId() {
             // Obtain the id/value of the book field and pass it to the hidden field
             document.querySelector("#bookID").value = parseInt(document.querySelector("#book").value);
+
+            // Submit the form to the endpoint /notes/list to obtain the notes from the database
             document.querySelector("#hiddenBook").submit();
         }
 
