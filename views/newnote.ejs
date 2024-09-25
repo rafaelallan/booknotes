@@ -17,7 +17,7 @@
                     <select class="form-select" id="book" name="book" required>
                         <option value="" selected>Choose a Book</option>
                         <% locals.books.forEach(function(books) { %>
-                            <!-- If used to keep the option selected after the server response -->
+                            <!-- 'If' used to keep the option selected after the server response -->
                             <option value="<%=books.id %>" name="<%=books.id %>" <% if(books.id==locals.bookID)
                                 {%><%- selected="selected" %>
                                     <%}%>><%=books.title %>

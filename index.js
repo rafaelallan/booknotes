@@ -38,6 +38,7 @@ app.route("/").get(async (req, res) => {
   // Used to obtain the last date read of the notes and assign to the books object to show on the page
   let result;
   var booksRead = [];
+  let sortingType = req.query.sortingType;
 
   try {
     let imagePath;
@@ -96,23 +97,29 @@ app.route("/").get(async (req, res) => {
           rating: result.rows[0].rating,
           summary: result.rows[0].summary,
           image: imagePath,
+          sortingModel: sortingType
         });
       }
-
     }
-    console.log(booksRead);
-    booksRead.sort((a,b) => b.last_value - a.last_value);
-    console.log("=======================");
-    console.log(booksRead);
+
+    // Sorting values according to the filter
+    if (sortingType == 'sortByDateRead') {
+      booksRead.sort((a,b) => b.last_value - a.last_value);
+      // console.log(booksRead);
+    } else if (sortingType == 'sortByRating') {
+      booksRead.sort((a,b) => b.rating - a.rating);
+    }
     
     
     res.render("index.ejs", {
       books: booksRead,
+      sortingModel: sortingType
     });
   } catch (err) {
     console.error(err.stack);
   }
 });
+
 
 // -------------------------- Handle Notes --------------------------
 
@@ -127,7 +134,6 @@ app.route("/notes")
 
 app.route("/notes/add")
   .post(async (req, res) => {
-    console.log(req.body);
     const bookID = req.body.book;
     const readDate = req.body.readDate;
     const rating = req.body.rating;
@@ -148,8 +154,6 @@ app
   .route("/notes/delete")
   .post(async (req, res) => {
     const idNoteBookToDelete = parseInt(req.body.idNoteBookToDelete);
-
-    // console.log(idNoteBookToDelete);
     
     try {
       db.query("DELETE FROM notes where book_id = $1", [idNoteBookToDelete]);

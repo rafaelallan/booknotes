@@ -1,13 +1,17 @@
 <%- include("partials/header.ejs") %>
 
     <div class="container">
-        <div class="sorting-section">
-            <select class="sorting-field" name="sorting">
-                <option value="">Sort by</option>
-                <option value="sortByDateRead">Date read</option>
-                <option value="sortByRating">Rating</option>
-            </select>
-        </div>
+
+
+        <form id="sorting-form" method="GET" action="/">
+            <div class="sorting-section">
+                <select class="sorting-field" id="sortingType" name="sortingType">
+                    <option value="">Sort by</option>
+                    <option value="sortByDateRead" id="sortByDateRead" name="sortByDateRead" <% if ( sortingModel == "sortByDateRead" ) { %> selected <% } %>>Date read</option>
+                    <option value="sortByRating" id="sortByRating" name="sortByRating" <% if ( sortingModel == "sortByRating" ) { %> selected <% } %>>Rating</option>
+                </select>
+            </div>
+        </form>
 
         <% locals.books.forEach(books=> { %>
             <div class="note-section mt-3">
@@ -63,10 +67,10 @@
     </div>
 
     <script>
-        function sortDateRead() {
+        function sorting() {
+            let sortSelected = document.querySelector("#sortingType").value;
 
+            document.querySelector("#sorting-form").submit();
         }
-
-        // When the field changes, it calls the field to manage the id to the hidden field
-        document.querySelector("#book").addEventListener('change', sendHiddenBookId);
+        document.querySelector("#sortingType").addEventListener('change', sorting);
     </script>
