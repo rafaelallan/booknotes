@@ -15,6 +15,15 @@ The system allows readers to store detailed notes, rate the books, and track whe
 
 This project showcases the functionality of a personalized reading database, making it easier to retain and revisit the most important information from books.
 
+### Technologies Used
+* HTML
+* CSS
+* Bootstrap
+* JavaScript
+* Node.js
+* Express.js
+* EJS (Embedeed JavaScript Templates)
+
 ## Installation
 
 ### Clone the Repository
